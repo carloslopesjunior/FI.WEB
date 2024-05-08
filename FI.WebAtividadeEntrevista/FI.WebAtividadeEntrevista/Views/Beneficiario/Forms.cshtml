@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+
+@section scripts{
+    <script>
+        var urlAlteracao = '@Url.Action("Alterar", "Beneficiario", new { area = "" })';        
+         @Scripts.Render("~/bundles/masks")
+
+    </script>
+    
+}
+
+@*<form id="formBeneficiario" method="post">*@
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="CPFbn">CPF:</label>
+                <input required="required" type="text" class="form-control" id="CPFbn" name="CPFbn" placeholder="Ex.: 010.011.111-00" maxlength="14">
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="Nomebn">Nome:</label>
+                <input required="required" type="text" class="form-control" id="Nomebn" name="Nomebn" placeholder="Ex.: João" maxlength="50">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <br />
+                <button  class="btn btn-sm btn-success" onclick="incluirBene()">Incluir</button>
+            </div>
+        </div>
+    </div>
+
+@*</form>*@
+
+<table id="TbBeneficiarios" class="table">
+    <thead>
+        <tr>
+            <th scope="col">CPF</th>
+            <th scope="col">NOME</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody id="bd-beneficiarios">
+        
+    </tbody>
+</table>
