@@ -13,10 +13,12 @@ $(document).ready(function () {
         $('#formCadastro #CPF').val(obj.CPF);
     }
 
-    $('#formCadastro').submit(function (e) {
+    $('#formCadastro').submit(async function (e) {
         e.preventDefault();
-        
-        $.ajax({
+
+        var status = "";
+
+        await $.ajax({
             url: urlPost,
             method: "POST",
             data: {
@@ -32,20 +34,44 @@ $(document).ready(function () {
                 "CPF": $(this).find("#CPF").val()
             },
             error:
-            function (r) {
-                if (r.status == 400)
-                    ModalDialog("Ocorreu um erro", r.responseJSON);
-                else if (r.status == 500)
-                    ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
-            },
+                function (r) {
+                    if (r.status == 400)
+                        status = r.responseJSON;
+                    else if (r.status == 500)
+                        status = "Ocorreu um erro interno no servidor.";
+                },
             success:
-            function (r) {
-                ModalDialog("Sucesso!", r)
-                $("#formCadastro")[0].reset();                                
+                async function (r) {
+                    status = "sucesso";
+                }
+        });
+
+
+
+        if (status == "sucesso") {
+
+            status = "";
+            var retorno = await salvaBeneficiario(obj.Id);
+
+            status = retorno;
+
+            if (status == "sucesso" || status == "") {
+
+                $("#formCadastro")[0].reset();
                 window.location.href = urlRetorno;
             }
-        });
-    })
+            else {
+                ModalDialog("Ocorreu um erro", status);
+            }
+        }
+        else if (status != null || status != "") {
+            ModalDialog("Ocorreu um erro", status);
+        }
+
+
+
+
+    });
     
 })
 

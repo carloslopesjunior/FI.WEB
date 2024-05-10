@@ -113,7 +113,7 @@ namespace WebAtividadeEntrevista.Controllers
                         CPF = model.CPF
                     });
 
-                    return Json("Cadastro alterado com sucesso");
+                    return Json("Cadastro alterado com sucesso!!");
                 }
 
 
